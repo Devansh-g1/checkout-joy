@@ -12,7 +12,8 @@ type Errors = Partial<Record<keyof ShippingAddress, string>>;
 const validate = (v: ShippingAddress): Errors => {
   const e: Errors = {};
   if (!v.fullName.trim()) e.fullName = "Required";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) e.email = "Invalid email";
+  if (!v.email.trim()) e.email = "Required";
+  else if (!v.email.includes("@")) e.email = "Email must contain @";
   if (!/^\d{10}$/.test(v.phone)) e.phone = "Must be 10 digits";
   if (!/^\d{6}$/.test(v.pinCode)) e.pinCode = "Must be 6 digits";
   if (!v.city.trim()) e.city = "Required";

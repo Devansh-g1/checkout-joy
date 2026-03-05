@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
 
-## Project info
+## Checkout Joy
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+A clean, modern **cart → shipping → payment → success** checkout flow built with **React + TypeScript** and styled with **Tailwind + shadcn/ui**.
 
-## How can I edit this code?
+This repo is intentionally small and readable: mock data is local, state is stored in a lightweight context, and each step is a focused component.
 
-There are several ways of editing your application.
+### What’s inside
 
-**Use Lovable**
+- **Cart step**
+  - Renders cart items from a mocked async fetch
+  - Quantity updates (with a minimum of 1)
+  - Displays subtotal and total
+- **Shipping step**
+  - Form fields: Full Name, Email, Phone Number, PIN Code, City, State
+  - Validation:
+    - **Email**: required and must contain `@`
+    - **Phone**: exactly **10 digits**
+    - **PIN Code**: exactly **6 digits**
+    - Other fields required
+- **Payment step**
+  - Final confirmation summary
+  - Simulated payment to success state
+- **Success step**
+  - Simple order success confirmation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Product images
 
-Changes made via Lovable will be committed automatically to this repo.
+Cart images are served from the `public/` folder:
 
-**Use your preferred IDE**
+- `public/products/bamboo-brush.png`
+- `public/products/cotton-bags.jpg`
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+The image paths are referenced in:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- `src/data/mockData.ts`
 
-Follow these steps:
+### Mock backend / data fetching
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+There’s no real backend here—just a tiny async mock that simulates latency:
+
+- `src/data/mockData.ts` exports `fetchCartData()` which returns the cart JSON after a short delay.
+
+### State management
+
+Checkout state (step, cart data, shipping address) is managed via React Context:
+
+- `src/context/CheckoutContext.tsx`
+
+### Tech stack
+
+- **React 18 + TypeScript**
+- **Vite 5** (dev server + build)
+- **Tailwind CSS**
+- **shadcn/ui + Radix UI**
+- **React Router** (page navigation)
+- **Zod / React Hook Form** are installed (used where appropriate in UI utilities)
+
+### Running locally
+
+Requirements: Node.js 18+ recommended.
+
+```bash
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+cd checkout-joy
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Useful scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run dev        # start dev server
+npm run build      # production build
+npm run preview    # preview production build locally
+npm run lint       # lint
+npm run test       # run tests once
+```
 
-**Use GitHub Codespaces**
+### Project structure (high-level)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- `src/pages/Index.tsx` – main checkout page (step container)
+- `src/components/CartStep.tsx` – cart UI
+- `src/components/ShippingStep.tsx` – shipping form + validation
+- `src/components/PaymentStep.tsx` – payment/confirmation
+- `src/context/CheckoutContext.tsx` – global checkout state
+- `src/data/mockData.ts` – mock cart data fetch
 
-## What technologies are used for this project?
+### Notes
 
-This project is built with:
+- If you previously saw a Vite CSS error about `@import` ordering, ensure `src/index.css` has any `@import` statements at the top (before `@tailwind ...`).
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
