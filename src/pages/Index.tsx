@@ -29,10 +29,12 @@ const CheckoutFlow = () => {
   );
 };
 
-const Index = () => (
-  <CheckoutProvider>
-    <CheckoutFlow />
-  </CheckoutProvider>
-);
+const Index = () => {
+  return (
+    <CheckoutProvider>
+      <CheckoutFlow />
+    </CheckoutProvider>
+  );
+};
 
 export default Index;
